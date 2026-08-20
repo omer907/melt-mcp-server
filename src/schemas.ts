@@ -82,11 +82,18 @@ export const EstimateAnnualLeakShape = {
 };
 
 export const RequestScanShape = {
-  company: z.string().optional().describe("The prospect's company name. Required."),
+  company: z
+    .string()
+    .optional()
+    .describe(
+      "The prospect's company name. Needed to route the request — if omitted, the tool asks for it instead of failing schema validation."
+    ),
   contactEmail: z
     .string()
     .optional()
-    .describe("Business email of the requester, for scan scheduling follow-up. Required."),
+    .describe(
+      "Business email of the requester, for scan scheduling follow-up. Needed to route the request — if omitted, the tool asks for it instead of failing schema validation."
+    ),
   contactName: z.string().optional().describe("Name of the requester, if known."),
   departmentsOfInterest: z
     .array(z.enum(["Operations", "Finance", "Engineering", "Legal", "GBS", "Sales", "HR", "Marketing", "Product", "Customer Success"]))
