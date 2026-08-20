@@ -20,6 +20,21 @@ reconciled 2026-07-18 against the live site and current decks — see
 | `melt_estimate_annual_leak` | Quantifies an already-identified leak pattern in dollars/yr — `totalVolume x (leakRatePct/100) x valuePerEvent`, generalizing Melt's real "Anatomy of a Scan" methodology (a 29% Gong bypass rate, a 62% Clari override rate, etc., combined into a real $77,235/yr finding). |
 | `melt_request_scan` | Lead-capture handoff — the move from a directional estimate to a real, log-verified scan (Frictionless POC Playbook Stage 1 → 2). Routes to HubSpot if `HUBSPOT_PORTAL_ID`/`HUBSPOT_FORM_ID` are set, otherwise appends to a local `leads.jsonl`. |
 
+## Worked example
+
+From Melt's [Anatomy of a Real AI Value Leak](https://themelt.ai/blog/anatomy-of-an-ai-value-leak) case study — a pre-IPO fintech with $1.5B in annual originations, already running Salesforce, Gong, and Clari:
+
+| Signal | Finding |
+|---|---|
+| Gong coaching | 29% open rate — reps bypassing AI-generated call summaries and duplicating the work manually |
+| Clari forecasting | 62% override rate — manual date entries corrupting the model across 8 of 13 forecast cycles |
+| Salesforce → CS handoff | 4.2-day lag delaying onboarding after close |
+| Salesforce lead routing | 32% manual — automation failures requiring daily manual reassignment |
+
+None of this showed up as a problem in the usual adoption dashboards — every tool was "active," which is a different measurement from whether it was actually creating value. Pulling 14 business days of historical logs and tracing where these four patterns cost real time and money added up to a **$77,235/year** leak.
+
+`melt_estimate_annual_leak` generalizes this same shape of analysis — `totalVolume × (leakRatePct/100) × valuePerEvent` — for any leak pattern with a known or hypothesized volume and rate. `melt_analyze_value_vectors` is the earlier-stage tool for when you don't yet know where to look.
+
 `melt_estimate_annual_leak` replaced four formula-named calculators
 (`melt_calculate_feature_waste`, `_dso_cash_flow_impact`,
 `_contract_cycle_revenue_unlock`, `_win_rate_pipeline_impact`) that
